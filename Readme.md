@@ -1,6 +1,6 @@
 # 卡尔曼滤波 C++ 教学程序说明文档
 
-本项目在根目录下完成了一个常规卡尔曼滤波（Kalman Filter）C++ 教学示例项目的开发。该项目严格遵循**过程化设计**，将底层矩阵计算与上层卡尔曼更新方程进行完全解耦，且**每个函数都有独立的头文件与源文件**，采用了符合专业规范的**接口与实现分离模式（Standard Library Layout）**。
+本项目在根目录下完成了一个常规卡尔曼滤波（Kalman Filter）C++ 教学示例项目的开发。该项目严格遵循**过程化设计**，将底层矩阵计算与上层卡尔曼更新方程进行完全解耦，且**每个函数和与之对应的文件都有独立的头文件与源文件（完全使用小驼峰命名的对应关系）**，采用了符合专业规范的**接口与实现分离模式（Standard Library Layout）**。
 
 ---
 
@@ -15,33 +15,33 @@ kalmanFilter/ (项目根目录)
  ├── Readme.md                      # 说明文档 (本文件)
  ├── include/                       # 所有的头文件 (.h)
  │    ├── math/                     # 通用矩阵数学库头文件
- │    │    ├── matrix_def.h         # 矩阵数据结构 Matrix 定义 (大驼峰命名)
+ │    │    ├── matrixDef.h          # 矩阵数据结构 Matrix 定义 (小驼峰文件名，下同)
  │    │    ├── matrix.h             # 矩阵库总聚合头文件
- │    │    ├── matrix_create.h      # 创建矩阵 (小驼峰命名，下同)
- │    │    ├── matrix_identity.h    # 创建单位矩阵
- │    │    ├── matrix_add.h         # 矩阵加法
- │    │    ├── matrix_sub.h         # 矩阵减法
- │    │    ├── matrix_mul.h         # 矩阵乘法
- │    │    ├── matrix_transpose.h   # 矩阵转置
- │    │    ├── matrix_invert.h      # 矩阵求逆 (高斯-约旦消元法)
- │    │    └── matrix_print.h       # 矩阵输出打印
+ │    │    ├── matrixCreate.h       # 创建矩阵
+ │    │    ├── matrixIdentity.h     # 创建单位矩阵
+ │    │    ├── matrixAdd.h          # 矩阵加法
+ │    │    ├── matrixSub.h          # 矩阵减法
+ │    │    ├── matrixMul.h          # 矩阵乘法
+ │    │    ├── matrixTranspose.h    # 矩阵转置
+ │    │    ├── matrixInvert.h       # 矩阵求逆 (高斯-约旦消元法)
+ │    │    └── matrixPrint.h        # 矩阵输出打印
  │    └── filter/                   # 滤波器算法库头文件
- │         ├── kalman_def.h         # 滤波器结构体 KalmanFilter 定义 (大驼峰命名)
+ │         ├── kalmanDef.h          # 滤波器结构体 KalmanFilter 定义 (小驼峰文件名，下同)
  │         ├── kalman.h             # 滤波器总聚合头文件
- │         ├── kalman_init.h        # 初始化滤波器 (小驼峰命名，下同)
- │         ├── kalman_predict_state.h       # 状态外推预测
- │         ├── kalman_predict_covariance.h  # 协方差外推预测
- │         ├── kalman_predict.h            # 预测总控制
- │         ├── kalman_calc_residual.h       # 计算残差
- │         ├── kalman_calc_innovation_cov.h # 计算残差协方差
- │         ├── kalman_calc_gain.h           # 计算卡尔曼增益
- │         ├── kalman_correct_state.h       # 修正状态
- │         ├── kalman_correct_covariance.h  # 修正协方差
- │         └── kalman_update.h              # 更新总控制
+ │         ├── kalmanInit.h         # 初始化滤波器
+ │         ├── kalmanPredictState.h       # 状态外推预测
+ │         ├── kalmanPredictCovariance.h  # 协方差外推预测
+ │         ├── kalmanPredict.h            # 预测总控制
+ │         ├── kalmanCalcResidual.h       # 计算残差
+ │         ├── kalmanCalcInnovationCov.h # 计算残差协方差
+ │         ├── kalmanCalcGain.h           # 计算卡尔曼增益
+ │         ├── kalmanCorrectState.h       # 修正状态
+ │         ├── kalmanCorrectCovariance.h  # 修正协方差
+ │         └── kalmanUpdate.h              # 更新总控制
  ├── src/                           # 所有的源实现文件 (.cpp)
- │    ├── math/                     # 矩阵库函数实现
- │    └── filter/                   # 滤波器步骤函数实现
- └── analysis/                      # 数据分析与可视化文件夹
+ │    ├── math/                     # 矩阵库函数实现 (例如 matrixCreate.cpp)
+ │    └── filter/                   # 滤波器步骤函数实现 (例如 kalmanInit.cpp)
+ └── analysis/                      # 数据分析与可视化文件夹 (已整理)
       ├── results.txt               # 运行 demo 重定向输出的数据日志
       ├── plot_results.py           # 用于读取结果并绘图的 Python 脚本
       ├── tuning_experiment.py      # 对比参数调优前后的仿真实验脚本
@@ -58,13 +58,13 @@ kalmanFilter/ (项目根目录)
 ```text
 main() (main.cpp)
  │
- ├── kalmanInit() (kalman_init.h / .cpp) -> 初始化 x, p, a, b, h, q, r 矩阵
+ ├── kalmanInit() (kalmanInit.h / .cpp) -> 初始化 x, p, a, b, h, q, r 矩阵
  │    ├── matrixCreate()
  │    └── matrixIdentity()
  │
  └── [时间循环步]
       │
-      ├── kalmanPredict() (kalman_predict.h / .cpp) -> 状态与协方差预测阶段
+      ├── kalmanPredict() (kalmanPredict.h / .cpp) -> 状态与协方差预测阶段
       │    ├── kalmanPredictState()        -> 预测状态: x = a * x + b * u
       │    │    ├── matrixMul()
       │    │    └── matrixAdd()
@@ -72,7 +72,7 @@ main() (main.cpp)
       │         ├── matrixMul()
       │         └── matrixTranspose()
       │
-      └── kalmanUpdate() (kalman_update.h / .cpp) -> 测量更新与数据融合阶段
+      └── kalmanUpdate() (kalmanUpdate.h / .cpp) -> 测量更新与数据融合阶段
            ├── kalmanCalcResidual()        -> 计算残差: y = z - h * x
            │    ├── matrixMul()
            │    └── matrixSub()
@@ -101,7 +101,7 @@ main() (main.cpp)
 1. **`kf_math`**：包含底层的纯通用矩阵数学操作（`Matrix` 结构体，以及 `matrixCreate`, `matrixMul` 等函数）。
 2. **`kf_filter`**：包含上层的卡尔曼滤波器逻辑（`KalmanFilter` 结构体，以及 `kalmanPredict`, `kalmanUpdate` 等函数）。
 
-在 `main.cpp` 中，可通过 `using namespace kf_math;` 和 `using namespace kf_filter;` 方便地引用它们。
+在 `main.cpp` 中，可通过 `using namespace kf_math;` and `using namespace kf_filter;` 方便地引用它们。
 
 ---
 
@@ -127,9 +127,9 @@ clang++ -std=c++11 -Iinclude main.cpp src/math/*.cpp src/filter/*.cpp -o kalman_
 
 ## 关键代码链接
 
-* 核心数据结构: [matrix_def.h](file:///Users/qingxu/Documents/Software/Cpp/kalmanFilter/include/math/matrix_def.h), [kalman_def.h](file:///Users/qingxu/Documents/Software/Cpp/kalmanFilter/include/filter/kalman_def.h)
-* 核心数学模块: [matrix_invert.cpp (高斯求逆)](file:///Users/qingxu/Documents/Software/Cpp/kalmanFilter/src/math/matrix_invert.cpp), [matrix_mul.cpp (乘法)](file:///Users/qingxu/Documents/Software/Cpp/kalmanFilter/src/math/matrix_mul.cpp)
-* 滤波器核心逻辑: [kalman_predict.cpp](file:///Users/qingxu/Documents/Software/Cpp/kalmanFilter/src/filter/kalman_predict.cpp), [kalman_update.cpp](file:///Users/qingxu/Documents/Software/Cpp/kalmanFilter/src/filter/kalman_update.cpp)
+* 核心数据结构: [matrixDef.h](file:///Users/qingxu/Documents/Software/Cpp/kalmanFilter/include/math/matrixDef.h), [kalmanDef.h](file:///Users/qingxu/Documents/Software/Cpp/kalmanFilter/include/filter/kalmanDef.h)
+* 核心数学模块: [matrixInvert.cpp (高斯求逆)](file:///Users/qingxu/Documents/Software/Cpp/kalmanFilter/src/math/matrixInvert.cpp), [matrixMul.cpp (乘法)](file:///Users/qingxu/Documents/Software/Cpp/kalmanFilter/src/math/matrixMul.cpp)
+* 滤波器核心逻辑: [kalmanPredict.cpp](file:///Users/qingxu/Documents/Software/Cpp/kalmanFilter/src/filter/kalmanPredict.cpp), [kalmanUpdate.cpp](file:///Users/qingxu/Documents/Software/Cpp/kalmanFilter/src/filter/kalmanUpdate.cpp)
 * 教学演示主入口: [main.cpp](file:///Users/qingxu/Documents/Software/Cpp/kalmanFilter/main.cpp)
 
 ---
@@ -149,8 +149,8 @@ clang++ -std=c++11 -Iinclude main.cpp src/math/*.cpp src/filter/*.cpp -o kalman_
 # 1. 运行 demo 并将输出重定向到 results.txt (放置于 analysis 目录下)
 ./kalman_demo > analysis/results.txt
 
-# 2. 运行 Python 脚本重新绘图 (您可以使用 ~/.ai-env/bin/python)
+# 2. 运行 Python 脚本重新绘图
 cd analysis
-~/.ai-env/bin/python plot_results.py
-~/.ai-env/bin/python tuning_experiment.py
+python3 plot_results.py
+python3 tuning_experiment.py
 ```

@@ -13,27 +13,27 @@ set(SOURCES
     # 主函数
     main.cpp
 
-    # 底层矩阵数学库
-    src/math/matrix_create.cpp
-    src/math/matrix_identity.cpp
-    src/math/matrix_add.cpp
-    src/math/matrix_sub.cpp
-    src/math/matrix_mul.cpp
-    src/math/matrix_transpose.cpp
-    src/math/matrix_invert.cpp
-    src/math/matrix_print.cpp
+    # 底层矩阵数学库 (小驼峰文件名)
+    src/math/matrixCreate.cpp
+    src/math/matrixIdentity.cpp
+    src/math/matrixAdd.cpp
+    src/math/matrixSub.cpp
+    src/math/matrixMul.cpp
+    src/math/matrixTranspose.cpp
+    src/math/matrixInvert.cpp
+    src/math/matrixPrint.cpp
 
-    # 卡尔曼滤波器核心库
-    src/filter/kalman_init.cpp
-    src/filter/kalman_predict_state.cpp
-    src/filter/kalman_predict_covariance.cpp
-    src/filter/kalman_predict.cpp
-    src/filter/kalman_calc_residual.cpp
-    src/filter/kalman_calc_innovation_cov.cpp
-    src/filter/kalman_calc_gain.cpp
-    src/filter/kalman_correct_state.cpp
-    src/filter/kalman_correct_covariance.cpp
-    src/filter/kalman_update.cpp
+    # 卡尔曼滤波器核心库 (小驼峰文件名)
+    src/filter/kalmanInit.cpp
+    src/filter/kalmanPredictState.cpp
+    src/filter/kalmanPredictCovariance.cpp
+    src/filter/kalmanPredict.cpp
+    src/filter/kalmanCalcResidual.cpp
+    src/filter/kalmanCalcInnovationCov.cpp
+    src/filter/kalmanCalcGain.cpp
+    src/filter/kalmanCorrectState.cpp
+    src/filter/kalmanCorrectCovariance.cpp
+    src/filter/kalmanUpdate.cpp
 )
 
 # 生成可执行文件
